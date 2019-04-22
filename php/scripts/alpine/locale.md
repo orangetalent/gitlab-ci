@@ -1,0 +1,16 @@
+de_DE
+en_GB
+en_US
+es_ES
+fr_FR
+it_IT
+ja_JP
+nl_BE
+nl_NL
+pl_PL
+pt_BR
+pt_PT
+ro_RO
+ru_RU
+zh_CN
+zh_HK
