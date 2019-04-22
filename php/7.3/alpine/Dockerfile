@@ -3,10 +3,6 @@ FROM php:7.3-alpine
 ARG BUILD_DATE
 ARG VCS_REF
 
-ENV LANG=de_DE.UTF-8
-ENV LANGUAGE=de_DE.UTF-8
-ENV LC_CTYPE=de_DE.UTF-8
-ENV LC_ALL=de_DE.UTF-8
 ENV IMAGE_USER=php
 ENV HOME=/home/$IMAGE_USER
 ENV COMPOSER_HOME=$HOME/.composer
@@ -24,14 +20,21 @@ COPY --from=composer:1 /usr/bin/composer /usr/bin/composer
 COPY --from=mhart/alpine-node:11.14.0 /usr/bin/node /usr/bin/
 COPY --from=mhart/alpine-node:11.14.0 /usr/lib/libgcc* /usr/lib/libstdc* /usr/lib/* /usr/lib/
 
-# COPY INSTALL SCRIPTS
+# Install locales
+RUN bash ./locales.sh
+
+# Set locale
+ENV LANG=de_DE.UTF-8
+ENV LANGUAGE=de_DE.UTF-8
+ENV LC_CTYPE=de_DE.UTF-8
+ENV LC_ALL=de_DE.UTF-8
+
 RUN chmod +x /tmp/*.sh \
   && adduser -D $IMAGE_USER \
   && mkdir -p /var/www/html \
   && apk add --update --no-cache bash \
   && touch ~/.bashrc \
   && bash ./packages.sh \
-  && bash ./locales.sh \
   && bash ./extensions.sh \
   && bash ./nodeyarn.sh \
   && composer global require "hirak/prestissimo:^0.3" \
