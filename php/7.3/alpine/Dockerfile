@@ -28,7 +28,7 @@ RUN chmod +x /tmp/*.sh \
   && adduser -D $IMAGE_USER \
   && mkdir -p /var/www/html \
   && apk add --update --no-cache bash \
-  && touch ~/.bashrc
+  && touch ~/.bashrc \
   && bash ./packages.sh \
   && bash ./locales.sh \
   && bash ./extensions.sh \
