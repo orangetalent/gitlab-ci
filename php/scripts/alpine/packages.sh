@@ -23,7 +23,8 @@ apk add --no-cache --virtual .persistent-deps \
 		ca-certificates \
 		tar \
 		xz \
-    curl
+    curl \
+    wget
 
 apk add --no-cache --virtual .build-deps \
     autoconf \

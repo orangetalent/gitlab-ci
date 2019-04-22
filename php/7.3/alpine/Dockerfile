@@ -3,18 +3,18 @@ FROM php:7.3-alpine
 ARG BUILD_DATE
 ARG VCS_REF
 
-ENV LANG=en_US.UTF-8 \
-    LANGUAGE=en_US.UTF-8 \
-    LC_CTYPE=en_US.UTF-8 \
-    LC_ALL=en_US.UTF-8 \
-    IMAGE_USER=php \
-    HOME=/home/$IMAGE_USER \
-    COMPOSER_HOME=$HOME/.composer \
-    PATH=$HOME/.yarn/bin:$PATH \
-    NODE_VERSION=11.14.0 \
-    NPM_VERSION=6 \
-    YARN_VERSION=latest \
-    PHP_VERSION=7.3
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US.UTF-8
+ENV LC_CTYPE=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
+ENV IMAGE_USER=php
+ENV HOME=/home/$IMAGE_USER
+ENV COMPOSER_HOME=$HOME/.composer
+ENV PATH=$HOME/.yarn/bin:$PATH
+ENV NODE_VERSION=11.14.0
+ENV NPM_VERSION=6
+ENV YARN_VERSION=latest
+ENV PHP_VERSION=7.3
 
 WORKDIR /tmp
 
@@ -28,8 +28,8 @@ RUN chmod +x /tmp/*.sh \
   && adduser -D $IMAGE_USER \
   && mkdir -p /var/www/html \
   && apk add --update --no-cache bash \
-  && bash ./languages.sh \
   && bash ./packages.sh \
+  && bash ./locales.sh \
   && bash ./extensions.sh \
   && bash ./nodeyarn.sh \
   && composer global require "hirak/prestissimo:^0.3" \
