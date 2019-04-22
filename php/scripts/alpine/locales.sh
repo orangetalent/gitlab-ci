@@ -1,14 +1,17 @@
 #!/usr/bin/env bash
 
-# Install required dependencies
-apk --no-cache add ca-certificates wget
+# Install libintl
+apk --no-cache add libintl
 
-# Install language pack
-wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
-wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.29-r0/glibc-2.29-r0.apk
-wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.29-r0/glibc-bin-2.29-r0.apk
-wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.29-r0/glibc-i18n-2.29-r0.apk
-apk add glibc-bin-2.29-r0.apk glibc-i18n-2.29-r0.apk glibc-2.29-r0.apk
+# Install dev dependencies for musl-locales
+apk --no-cache --virtual .locale_build add cmake make musl-dev gcc gettext-dev git
 
-# Iterate through all locale and install it
-cat /tmp/locale.md | xargs -i /usr/glibc-compat/bin/localedef -i {} -f UTF-8 {}.UTF-8
+# Clone musl locales source
+git clone https://gitlab.com/rilian-la-te/musl-locales
+
+# Build and install musl-locales
+cd musl-locales && cmake -DLOCALE_PROFILE=OFF -DCMAKE_INSTALL_PREFIX:PATH=/usr . && make && make install
+
+# Remove sources and compile artifacts
+cd .. && rm -r musl-locales
+apk del .locale_build
