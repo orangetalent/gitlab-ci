@@ -20,6 +20,10 @@ COPY --from=composer:1 /usr/bin/composer /usr/bin/composer
 COPY --from=mhart/alpine-node:11.14.0 /usr/bin/node /usr/bin/
 COPY --from=mhart/alpine-node:11.14.0 /usr/lib/libgcc* /usr/lib/libstdc* /usr/lib/* /usr/lib/
 
+# Install bash
+RUN apk add --update --no-cache bash \
+  && touch ~/.bashrc
+
 # Install locales
 RUN bash ./locales.sh
 
@@ -32,8 +36,6 @@ ENV LC_ALL=de_DE.UTF-8
 RUN chmod +x /tmp/*.sh \
   && adduser -D $IMAGE_USER \
   && mkdir -p /var/www/html \
-  && apk add --update --no-cache bash \
-  && touch ~/.bashrc \
   && bash ./packages.sh \
   && bash ./extensions.sh \
   && bash ./nodeyarn.sh \
