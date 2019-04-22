@@ -16,7 +16,6 @@ ENV MUSL_LOCPATH="/usr/share/i18n/locales/musl"
 WORKDIR /tmp
 
 COPY ./php/scripts/alpine/*.sh /tmp/
-COPY ./php/scripts/alpine/*.md /tmp/
 COPY --from=composer:1 /usr/bin/composer /usr/bin/composer
 COPY --from=mhart/alpine-node:11.14.0 /usr/bin/node /usr/bin/
 COPY --from=mhart/alpine-node:11.14.0 /usr/lib/libgcc* /usr/lib/libstdc* /usr/lib/* /usr/lib/
