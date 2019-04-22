@@ -31,12 +31,7 @@ apk --update --no-cache add \
   sqlite-dev \
   zlib-dev
 
-
-if [[ $PHP_VERSION == "7.3" ]]; then
-  apk --update --no-cache add libzip-dev libsodium-dev
-else
-  apk --no-cache add --repository http://dl-cdn.alpinelinux.org/alpine/v3.5/community libzip-dev
-fi
+apk --update --no-cache add libzip-dev libsodium-dev
 
 docker-php-ext-configure ldap
 docker-php-ext-install -j "$(nproc)" ldap
@@ -51,45 +46,6 @@ docker-php-ext-install -j "$(nproc)" gd
 docker-php-ext-install -j "$(nproc)" exif xml xmlrpc pcntl bcmath bz2 calendar iconv intl mbstring mysqli opcache pdo_mysql pdo_pgsql pgsql soap zip
 docker-php-source delete
 
-# pecl install pdo_sqlsrv sqlsrv \
-#   && docker-php-ext-enable pdo_sqlsrv sqlsrv
-
-if [[ $PHP_VERSION == "7.3" ]]; then
-  git clone --depth 1 -b 2.7.0RC1 "https://github.com/xdebug/xdebug" \
-    && cd xdebug \
-    && phpize \
-    && ./configure \
-    && make \
-    && make install \
-    && docker-php-ext-enable xdebug
-
-elif [[ $PHP_VERSION == "7.2" ]]; then
-  git clone --depth 1 "https://github.com/xdebug/xdebug" \
-    && cd xdebug \
-    && phpize \
-    && ./configure \
-    && make \
-    && make install \
-    && docker-php-ext-enable xdebug
-else
-  apk --update --no-cache add \
-    libmcrypt-dev \
-    libmcrypt \
-
-    docker-php-ext-install -j$(getconf _NPROCESSORS_ONLN) mcrypt
-
-    pecl install xdebug \
-      && docker-php-ext-enable xdebug
-fi
-
-docker-php-source extract \
-    && curl -L -o /tmp/redis.tar.gz "https://github.com/phpredis/phpredis/archive/4.2.0.tar.gz" \
-    && tar xfz /tmp/redis.tar.gz \
-    && rm -r /tmp/redis.tar.gz \
-    && mv phpredis-4.2.0 /usr/src/php/ext/redis \
-    && docker-php-ext-install redis \
-    && docker-php-source delete
-
 docker-php-source extract \
     && apk add --no-cache --virtual .phpize-deps-configure $PHPIZE_DEPS \
     && pecl install apcu \
@@ -99,18 +55,6 @@ docker-php-source extract \
 
 pecl install imagick \
     && docker-php-ext-enable imagick
-
-pecl install mongodb \
-    && docker-php-ext-enable mongodb
-
-git clone "https://github.com/php-memcached-dev/php-memcached.git" \
-    && cd php-memcached \
-    && phpize \
-    && ./configure --disable-memcached-sasl \
-    && make \
-    && make install \
-    && cd ../ && rm -rf php-memcached \
-    && docker-php-ext-enable memcached
 
 { \
     echo 'opcache.enable=1'; \
