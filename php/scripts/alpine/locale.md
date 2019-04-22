@@ -7,7 +7,6 @@ it_IT
 ja_JP
 nl_BE
 nl_NL
-no_NO
 pl_PL
 pt_BR
 pt_PT
