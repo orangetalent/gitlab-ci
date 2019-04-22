@@ -1,0 +1,86 @@
+---
+package:
+  curl:
+    installed: true
+  sudo:
+    installed: true
+
+command:
+  node --version:
+    exit-status: 0
+    stdout:
+      - "v10.15"
+  yarn --version:
+    exit-status: 0
+  npm --version:
+    exit-status: 0
+  sudo npm --version:
+    exit-status: 0
+  composer --version:
+    exit-status: 0
+  python --version:
+    exit-status: 0
+  make --version:
+    exit-status: 0
+  gcc --version:
+    exit-status: 0
+  g++ --version:
+    exit-status: 0
+  php --version:
+    exit-status: 0
+    stdout:
+      - 7
+  php -m:
+    exit-status: 0
+    stdout:
+      - pcntl
+      - bcmath
+      - bz2
+      - calendar
+      - iconv
+      - intl
+      - gd
+      - ldap
+      - mbstring
+      - memcached
+      - mcrypt
+      - mysqli
+      - pdo_mysql
+      - pdo_pgsql
+      - pgsql
+      - redis
+      - soap
+      - Zend OPcache
+      - zip
+      - mongodb
+      - apcu
+      - imap
+      - xml
+      - xmlrpc
+      - xdebug
+      - exif
+      - imagick
+
+file:
+  /usr/local/etc/php/conf.d/zz-conf.ini:
+    exists: true
+    contains:
+      - memory_limit
+  /usr/local/etc/php/conf.d/opcache-recommended.ini:
+    exists: true
+  /usr/local/etc/php/conf.d/apcu-recommended.ini:
+    exists: true
+  /home/php:
+    exists: true
+    owner: php
+  /home/php/.composer:
+    exists: true
+    owner: php
+  /home/php/.config:
+    exists: true
+    owner: php
+
+user:
+  php:
+    exists: true
+    home: /home/php
