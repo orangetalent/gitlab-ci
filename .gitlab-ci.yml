@@ -24,4 +24,22 @@ Alpine 7.3:
     - docker pull $NAMESPACE:$IMAGE_VERSION || true
     - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/7.3/alpine/Dockerfile .
     - docker push $NAMESPACE:$IMAGE_VERSION
+  only:
+    changes:
+      - php/7.3/alpine/Dockerfile
+      - scripts/alpine/*
+  when: always
+
+Ubuntu 7.3:
+  stage: build
+  variables:
+    IMAGE_VERSION: "7.3-ubuntu"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/7.3/ubuntu/Dockerfile .
+    - docker push $NAMESPACE:$IMAGE_VERSION
+  only:
+    changes:
+      - php/7.3/ubuntu/Dockerfile
   when: always
