@@ -12,6 +12,7 @@ RUN apt-get update \
     && apt-cache search php7.3-* \
     && apt-get -y --no-install-recommends install \
         git \
+        sudo \
         openssh-client \
         locales \
         bash \
