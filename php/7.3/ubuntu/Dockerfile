@@ -8,6 +8,8 @@ RUN apt-get update \
     && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C \
     && apt-get update \
     && apt-get -y --no-install-recommends install \
+        git \
+        ssh-agent \
         locales \
         bash \
         nodejs \
