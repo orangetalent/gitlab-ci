@@ -1,5 +1,7 @@
 FROM ubuntu:bionic
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Install Ondrej repos for Ubuntu Bionic, PHP7.3, composer and selected extensions - better selection than
 # the distro's packages
 RUN apt-get update \
@@ -9,7 +11,7 @@ RUN apt-get update \
     && apt-get update \
     && apt-get -y --no-install-recommends install \
         git \
-        ssh-agent \
+        openssh-client \
         locales \
         bash \
         nodejs \
