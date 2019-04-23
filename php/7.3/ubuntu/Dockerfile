@@ -9,6 +9,7 @@ RUN apt-get update \
     && echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu bionic main" > /etc/apt/sources.list.d/ondrej-php.list \
     && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C \
     && apt-get update \
+    && apt-cache search php7.3-* \
     && apt-get -y --no-install-recommends install \
         git \
         openssh-client \
@@ -23,11 +24,18 @@ RUN apt-get update \
         php-apcu-bc \
         php7.3-cli \
         php7.3-curl \
+        php7.3-bcmath \
         php7.3-json \
+        php7.3-gd \
         php7.3-mbstring \
         php7.3-opcache \
+        php7.3-intl \
+        php7.3-pdo \
+        php7.3-pgsql \
+        php7.3-mysql \
         php7.3-readline \
         php7.3-xml \
+        php7.3-xmlrpc \
         php7.3-zip \
     && locale-gen de_DE.UTF-8 \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
