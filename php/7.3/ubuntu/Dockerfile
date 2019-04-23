@@ -44,6 +44,8 @@ RUN apt-get update \
     && composer clear-cache \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* ~/.composer \
-    && curl -o- -L https://yarnpkg.com/install.sh | bash
+    && curl -o- -L https://yarnpkg.com/install.sh | bash \
+    && ln -s $HOME/.yarn/bin /usr/local/bin/yarn \
+    && ln -s $HOME/.yarn/bin /usr/local/bin/yarnpkg
 
 CMD ["bash"]
