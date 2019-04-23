@@ -8,6 +8,7 @@ RUN apt-get update \
     && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C \
     && apt-get update \
     && apt-get -y --no-install-recommends install \
+        locales \
         bash \
         nodejs \
         ca-certificates \
@@ -24,12 +25,12 @@ RUN apt-get update \
         php7.3-readline \
         php7.3-xml \
         php7.3-zip \
+    && locale-gen de_DE.UTF-8 \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && composer global require hirak/prestissimo \
     && composer clear-cache \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* ~/.composer
-
-RUN curl -o- -L https://yarnpkg.com/install.sh | bash
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* ~/.composer \
+    && curl -o- -L https://yarnpkg.com/install.sh | bash
 
 CMD ["bash"]
