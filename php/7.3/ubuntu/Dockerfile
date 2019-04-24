@@ -9,14 +9,12 @@ RUN apt-get update \
     && echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu bionic main" > /etc/apt/sources.list.d/ondrej-php.list \
     && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C \
     && apt-get update \
-    && apt-cache search php7.3-* \
     && apt-get -y --no-install-recommends install \
         git \
         sudo \
         openssh-client \
         locales \
         bash \
-        nodejs \
         ca-certificates \
         apt-transport-https \
         curl \
@@ -38,6 +36,8 @@ RUN apt-get update \
         php7.3-xml \
         php7.3-xmlrpc \
         php7.3-zip \
+    && curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash - \
+    && apt-get -y --no-install-recommends install nodejs \
     && locale-gen de_DE.UTF-8 \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && composer global require hirak/prestissimo \
@@ -46,6 +46,12 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* ~/.composer \
     && curl -o- -L https://yarnpkg.com/install.sh | bash \
     && ln -s $HOME/.yarn/bin/yarn /usr/local/bin/yarn \
-    && ln -s $HOME/.yarn/bin/yarn /usr/local/bin/yarnpkg
+    && ln -s $HOME/.yarn/bin/yarn /usr/local/bin/yarnpkg \
+    && composer --version \
+    && yarn -v \
+    && npm -v \
+    && node -v \
+    && php -v \
+    && git --version
 
 CMD ["bash"]
