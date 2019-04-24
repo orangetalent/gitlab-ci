@@ -1,11 +1,18 @@
 FROM ubuntu:bionic
 
 ENV DEBIAN_FRONTEND=noninteractive
+ENV LC_ALL=de_DE.UTF8
+ENV LANG=de_DE.UTF8
+ENV LC_CTYPE=de_DE.UTF8
+ENV LC_COLLATE=de_DE.UTF8
+
+COPY --from=composer:1 /usr/bin/composer /usr/bin/composer
 
 # Install Ondrej repos for Ubuntu Bionic, PHP7.3, composer and selected extensions - better selection than
 # the distro's packages
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends gnupg \
+    && apt-get install -y --no-install-recommends gnupg locales \
+    && locale-gen de_DE.UTF-8 \
     && echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu bionic main" > /etc/apt/sources.list.d/ondrej-php.list \
     && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C \
     && apt-get update \
@@ -13,7 +20,6 @@ RUN apt-get update \
         git \
         sudo \
         openssh-client \
-        locales \
         bash \
         ca-certificates \
         apt-transport-https \
@@ -38,9 +44,7 @@ RUN apt-get update \
         php7.3-zip \
     && curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash - \
     && apt-get -y --no-install-recommends install nodejs \
-    && locale-gen de_DE.UTF-8 \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    && composer global require hirak/prestissimo \
+    && composer require hirak/prestissimo \
     && composer clear-cache \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* ~/.composer \
@@ -48,10 +52,12 @@ RUN apt-get update \
     && ln -s $HOME/.yarn/bin/yarn /usr/local/bin/yarn \
     && ln -s $HOME/.yarn/bin/yarn /usr/local/bin/yarnpkg \
     && composer --version \
+    && composer show \
     && yarn -v \
     && npm -v \
     && node -v \
     && php -v \
-    && git --version
+    && git --version \
+    && locale
 
 CMD ["bash"]
