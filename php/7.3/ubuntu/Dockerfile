@@ -13,7 +13,6 @@ RUN apt-get update \
     && apt-get update \
     && apt-get -y --no-install-recommends install \
         git \
-        sudo \
         openssh-client \
         bash \
         ca-certificates \
@@ -38,16 +37,16 @@ RUN apt-get update \
         php7.3-xmlrpc \
         php7.3-zip \
         rsync \
-    && curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash - \
+    && curl -sL https://deb.nodesource.com/setup_10.x | bash \
     && apt-get -y --no-install-recommends install nodejs \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* ~/.composer \
     && curl -o- -L https://yarnpkg.com/install.sh | bash \
     && ln -s $HOME/.yarn/bin/yarn /usr/local/bin/yarn \
     && ln -s $HOME/.yarn/bin/yarn /usr/local/bin/yarnpkg \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer \
     && composer global require hirak/prestissimo \
-    && composer clear-cache
+    && composer clear-cache \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* ~/.composer
 
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
