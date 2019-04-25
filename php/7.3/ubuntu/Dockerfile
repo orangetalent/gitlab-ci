@@ -1,8 +1,8 @@
 FROM ubuntu:bionic
 
 ENV DEBIAN_FRONTEND=noninteractive
-
-COPY --from=composer:1 /usr/bin/composer /usr/bin/composer
+ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV COMPOSER_NO_INTERACTION=1
 
 # Install Ondrej repos for Ubuntu Bionic, PHP7.3, composer and selected extensions - better selection than
 # the distro's packages
@@ -40,21 +40,14 @@ RUN apt-get update \
         rsync \
     && curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash - \
     && apt-get -y --no-install-recommends install nodejs \
-    && composer require hirak/prestissimo \
-    && composer clear-cache \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* ~/.composer \
     && curl -o- -L https://yarnpkg.com/install.sh | bash \
     && ln -s $HOME/.yarn/bin/yarn /usr/local/bin/yarn \
     && ln -s $HOME/.yarn/bin/yarn /usr/local/bin/yarnpkg \
-    && composer --version \
-    && composer show \
-    && yarn -v \
-    && npm -v \
-    && node -v \
-    && php -v \
-    && git --version \
-    && locale -a
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer \
+    && composer global require hirak/prestissimo \
+    && composer clear-cache
 
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
