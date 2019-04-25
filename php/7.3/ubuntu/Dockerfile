@@ -37,6 +37,7 @@ RUN apt-get update \
         php7.3-xml \
         php7.3-xmlrpc \
         php7.3-zip \
+        rsync \
     && curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash - \
     && apt-get -y --no-install-recommends install nodejs \
     && composer require hirak/prestissimo \
