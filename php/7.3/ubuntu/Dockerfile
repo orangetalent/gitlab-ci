@@ -3,16 +3,21 @@ FROM ubuntu:bionic
 ENV DEBIAN_FRONTEND=noninteractive
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV COMPOSER_NO_INTERACTION=1
+ENV COMPOSER_BIN_DIR=/usr/local/bin
+ENV COMPOSER_HOME=/root/.composer
+ENV PATH="$COMPOSER_BIN_DIR:$PATH"
 
 # Install Ondrej repos for Ubuntu Bionic, PHP7.3, composer and selected extensions - better selection than
 # the distro's packages
 RUN apt-get update \
+    && mkdir -p $COMPOSER_HOME \
     && apt-get install -y --no-install-recommends gnupg locales locales-all \
     && echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu bionic main" > /etc/apt/sources.list.d/ondrej-php.list \
     && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C \
     && apt-get update \
     && apt-get -y --no-install-recommends install \
         git \
+        sudo \
         openssh-client \
         bash \
         ca-certificates \
@@ -43,10 +48,9 @@ RUN apt-get update \
     && curl -o- -L https://yarnpkg.com/install.sh | bash \
     && ln -s $HOME/.yarn/bin/yarn /usr/local/bin/yarn \
     && ln -s $HOME/.yarn/bin/yarn /usr/local/bin/yarnpkg \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer \
-    && composer global require hirak/prestissimo \
-    && composer clear-cache \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* ~/.composer
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=$COMPOSER_BIN_DIR --filename=composer \
+    && $COMPOSER_BIN_DIR/composer global require "hirak/prestissimo:^0.3" \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* $COMPOSER_HOME/cache/*
 
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
