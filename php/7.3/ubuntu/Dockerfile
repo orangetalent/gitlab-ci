@@ -43,6 +43,7 @@ RUN apt-get update \
         php7.3-xmlrpc \
         php7.3-zip \
         rsync \
+        libpng-dev \
     && curl -sL https://deb.nodesource.com/setup_10.x | bash \
     && apt-get -y --no-install-recommends install nodejs \
     && apt-get clean \
