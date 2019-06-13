@@ -47,6 +47,7 @@ RUN apt-get update \
         libjpeg-dev \
         libtiff-dev \
         libgif-dev \
+        awscli \
     && curl -sL https://deb.nodesource.com/setup_10.x | bash \
     && apt-get -y --no-install-recommends install nodejs \
     && apt-get clean \
