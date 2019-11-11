@@ -42,6 +42,7 @@ RUN apt-get update \
         php7.3-xml \
         php7.3-xmlrpc \
         php7.3-zip \
+        php7.3-redis \
         rsync \
         libpng-dev \
         libjpeg-dev \
