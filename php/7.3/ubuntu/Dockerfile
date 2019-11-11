@@ -39,6 +39,7 @@ RUN apt-get update \
         php7.3-mysql \
         php7.3-sqlite3 \
         php7.3-readline \
+        php7.3-redis \
         php7.3-xml \
         php7.3-xmlrpc \
         php7.3-zip \
