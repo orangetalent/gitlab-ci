@@ -49,24 +49,24 @@ RUN apt-get update \
         libtiff-dev \
         libgif-dev \
         awscli \
-        # XDebug
+    # XDebug
         php-pear \
         php7.4-dev \
-        make
+        make \
 
-RUN pecl channel-update pecl.php.net \
+    && pecl channel-update pecl.php.net \
       #&& php -i | grep /.+/php.ini -oE \
       #&& pecl config-set php_ini $(php -i | grep /.+/php.ini -oE) \
       #&& pecl install xdebug
-      && pecl install xdebug-beta
+      && pecl install xdebug-beta \
 
-# Enable xdebug extension in php.ini
-RUN php -i | grep /.+/php.ini -oE
-RUN find / -name "xdebug.so"
-RUN echo "zend_extension="$(find / -name "xdebug.so") >> $(php -i | grep /.+/php.ini -oE)
-RUN cat $(php -i | grep /.+/php.ini -oE)
+    # Enable xdebug extension in php.ini
+    && php -i | grep /.+/php.ini -oE \
+    && find / -name "xdebug.so" \
+    && echo "zend_extension="$(find / -name "xdebug.so") >> $(php -i | grep /.+/php.ini -oE) \
+    && cat $(php -i | grep /.+/php.ini -oE) \
 
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash \
+    && curl -sL https://deb.nodesource.com/setup_10.x | bash \
     && apt-get -y --no-install-recommends install nodejs \
     && apt-get clean \
     && curl -o- -L https://yarnpkg.com/install.sh | bash \
