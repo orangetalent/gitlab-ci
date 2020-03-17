@@ -49,8 +49,8 @@ RUN apt-get update \
         libtiff-dev \
         libgif-dev \
         awscli \
-    && pecl install xdebug 
-    && docker-php-ext-enable xdebug
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug \
     && curl -sL https://deb.nodesource.com/setup_10.x | bash \
     && apt-get -y --no-install-recommends install nodejs \
     && apt-get clean \
