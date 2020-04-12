@@ -1,1 +1,1 @@
-# OT Gitlab CI image
+# OT Gitlab CI images

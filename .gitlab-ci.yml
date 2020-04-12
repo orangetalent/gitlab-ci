@@ -45,3 +45,13 @@ Ubuntu 7.4 xdebug:
     - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/7.4/ubuntu-xdebug/Dockerfile .
     - docker push $NAMESPACE:$IMAGE_VERSION
   when: manual
+
+Glyphhanger:
+  stage: build
+  variables:
+    IMAGE_VERSION: "glyphhanger"
+  script:
+    - docker pull orangetalent:$IMAGE_VERSION || true
+    - docker build --compress --cache-from orangetalent:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t orangetalent:$IMAGE_VERSION -f glyphhanger/Dockerfile .
+    - docker push orangetalent:$IMAGE_VERSION
+  when: manual
