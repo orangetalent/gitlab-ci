@@ -22,7 +22,6 @@ RUN apk add --update --no-cache npm \
   # Install Glyphhanger
   && npm install -g glyphhanger --unsafe-perm=true \
   && glyphhanger --version \
-  && apk del build-dependencies \
-  && rm -rf /root/.npm-global/lib/node_modules/glyphhanger/node_modules/puppeteer
+  && apk del build-dependencies
 
 CMD ["bash"]
