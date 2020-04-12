@@ -3,7 +3,8 @@ FROM python:3-alpine
 ENV NPM_CONFIG_PREFIX=/root/.npm-global
 ENV PATH=$PATH:/root/.npm-global/bin
 
-RUN apk add --update --no-cache --virtual build-dependencies npm git build-base \
+RUN apk add --update --no-cache npm \
+  && apk add --update --no-cache --virtual build-dependencies git build-base \
   &&  pip install fonttools \
   # Install Brotli
   && git clone https://github.com/google/brotli \
