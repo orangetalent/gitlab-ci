@@ -35,6 +35,7 @@ RUN apt-get update \
         php7.3-opcache \
         php7.3-intl \
         php7.3-pdo \
+        php7.3-soap \
         php7.3-pgsql \
         php7.3-mysql \
         php7.3-sqlite3 \
