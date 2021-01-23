@@ -20,17 +20,6 @@
     - Curl
     - Git
 
-- [7.4-ubuntu-xdebug](./php/7.4/ubuntu-xdebug/Dockerfile)
-    - PHP 7.4
-    - Composer 1.10.19 (with Prestissimo)
-    - XDebug
-    - Node.JS 10.x and NPM
-    - Yarn
-    - Rsync
-    - AWS CLI
-    - Curl
-    - Git
-
 - [7.4-ubuntu-node-14](./php/7.4/ubuntu-node-14/Dockerfile)
     - PHP 7.4
     - Composer 1.10.19 (with Prestissimo)

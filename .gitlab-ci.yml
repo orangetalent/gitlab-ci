@@ -35,17 +35,6 @@ Ubuntu 7.4:
     - docker push $NAMESPACE:$IMAGE_VERSION
   when: manual
 
-Ubuntu 7.4 xdebug:
-  stage: build
-  variables:
-    IMAGE_VERSION: "7.4-ubuntu-xdebug"
-  script:
-    - docker pull php:$IMAGE_VERSION || true
-    - docker pull $NAMESPACE:$IMAGE_VERSION || true
-    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/7.4/ubuntu-xdebug/Dockerfile .
-    - docker push $NAMESPACE:$IMAGE_VERSION
-  when: manual
-
 Ubuntu 7.4 Node 14:
   stage: build
   variables:
