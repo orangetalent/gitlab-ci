@@ -46,12 +46,24 @@ Ubuntu 7.4 xdebug:
     - docker push $NAMESPACE:$IMAGE_VERSION
   when: manual
 
-Glyphhanger:
+Ubuntu 7.4 Node 14:
   stage: build
   variables:
-    IMAGE_VERSION: "glyphhanger"
+    IMAGE_VERSION: "7.4-ubuntu-node-14"
   script:
+    - docker pull php:$IMAGE_VERSION || true
     - docker pull $NAMESPACE:$IMAGE_VERSION || true
-    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f glyphhanger/Dockerfile .
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/7.4/ubuntu-node-14/Dockerfile .
+    - docker push $NAMESPACE:$IMAGE_VERSION
+  when: manual
+
+Ubuntu 8.0:
+  stage: build
+  variables:
+    IMAGE_VERSION: "8.0-ubuntu"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/8.0/ubuntu/Dockerfile .
     - docker push $NAMESPACE:$IMAGE_VERSION
   when: manual

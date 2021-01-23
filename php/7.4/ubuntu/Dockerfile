@@ -56,9 +56,14 @@ RUN apt-get update \
     && curl -o- -L https://yarnpkg.com/install.sh | bash \
     && ln -s $HOME/.yarn/bin/yarn /usr/local/bin/yarn \
     && ln -s $HOME/.yarn/bin/yarn /usr/local/bin/yarnpkg \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=$COMPOSER_BIN_DIR --filename=composer \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=$COMPOSER_BIN_DIR --filename=composer --version=1.10.19 \
     && $COMPOSER_BIN_DIR/composer global require "hirak/prestissimo:^0.3" \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* $COMPOSER_HOME/cache/*
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* $COMPOSER_HOME/cache/* \
+    && php -v \
+    && composer --version \
+    && node -v \
+    && npm -v \
+    && yarn -v
 
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8

@@ -7,7 +7,7 @@ ENV COMPOSER_BIN_DIR=/usr/local/bin
 ENV COMPOSER_HOME=/root/.composer
 ENV PATH="$COMPOSER_BIN_DIR:$PATH"
 
-# Install Ondrej repos for Ubuntu Bionic, PHP7.3, composer and selected extensions - better selection than
+# Install Ondrej repos for Ubuntu Bionic, PHP, composer and selected extensions - better selection than
 # the distro's packages
 RUN apt-get update \
     && mkdir -p $COMPOSER_HOME \
@@ -26,44 +26,38 @@ RUN apt-get update \
         unzip \
         php-apcu \
         php-apcu-bc \
-        php7.3-cli \
-        php7.3-curl \
-        php7.3-bcmath \
-        php7.3-json \
-        php7.3-gd \
-        php7.3-mbstring \
-        php7.3-opcache \
-        php7.3-intl \
-        php7.3-pdo \
-        php7.3-soap \
-        php7.3-pgsql \
-        php7.3-mysql \
-        php7.3-sqlite3 \
-        php7.3-readline \
-        php7.3-redis \
-        php7.3-xml \
-        php7.3-xmlrpc \
-        php7.3-zip \
+        php8.0-cli \
+        php8.0-curl \
+        php8.0-bcmath \
+        php8.0-gd \
+        php8.0-mbstring \
+        php8.0-opcache \
+        php8.0-intl \
+        php8.0-pdo \
+        php8.0-pgsql \
+        php8.0-mysql \
+        php8.0-sqlite3 \
+        php8.0-readline \
+        php8.0-redis \
+        php8.0-xml \
+        php8.0-soap \
+        php8.0-xmlrpc \
+        php8.0-zip \
         rsync \
         libpng-dev \
         libjpeg-dev \
         libtiff-dev \
         libgif-dev \
         awscli \
-    && curl -sL https://deb.nodesource.com/setup_10.x | bash \
+    && curl -sL https://deb.nodesource.com/setup_14.x | bash \
     && apt-get -y --no-install-recommends install nodejs \
     && apt-get clean \
-    && curl -o- -L https://yarnpkg.com/install.sh | bash \
-    && ln -s $HOME/.yarn/bin/yarn /usr/local/bin/yarn \
-    && ln -s $HOME/.yarn/bin/yarn /usr/local/bin/yarnpkg \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=$COMPOSER_BIN_DIR --filename=composer --version=1.10.19 \
-    && $COMPOSER_BIN_DIR/composer global require "hirak/prestissimo:^0.3" \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=$COMPOSER_BIN_DIR --filename=composer \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* $COMPOSER_HOME/cache/* \
     && php -v \
     && composer --version \
     && node -v \
-    && npm -v \
-    && yarn -v
+    && npm -v
 
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
