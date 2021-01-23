@@ -43,7 +43,6 @@
 - [8.0-ubuntu](./php/8.0/ubuntu/Dockerfile)
     - PHP 8.0
     - Composer 2
-    - XDebug
     - Node.JS 14.x and NPM
     - Rsync
     - AWS CLI
