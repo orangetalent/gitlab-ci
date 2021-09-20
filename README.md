@@ -2,7 +2,7 @@
 
 - [7.3-ubuntu](./php/7.3/ubuntu/Dockerfile)
     - PHP 7.3
-    - Composer 1.10.19 (with Prestissimo)
+    - Composer 1 (with Prestissimo)
     - Node.JS 10.x and NPM
     - Yarn
     - Rsync
@@ -12,7 +12,7 @@
 
 - [7.4-ubuntu](./php/7.4/ubuntu/Dockerfile)
     - PHP 7.4
-    - Composer 1.10.19 (with Prestissimo)
+    - Composer 1 (with Prestissimo)
     - Node.JS 10.x and NPM
     - Yarn
     - Rsync
@@ -22,7 +22,16 @@
 
 - [7.4-ubuntu-node-14](./php/7.4/ubuntu-node-14/Dockerfile)
     - PHP 7.4
-    - Composer 1.10.19 (with Prestissimo)
+    - Composer 1 (with Prestissimo)
+    - Node.JS 14.x and NPM
+    - Rsync
+    - AWS CLI
+    - Curl
+    - Git
+
+- [7.4-ubuntu-node-14-composer-2](./php/7.4/ubuntu-node-14-composer-2/Dockerfile)
+    - PHP 7.4
+    - Composer 2 (with Prestissimo)
     - Node.JS 14.x and NPM
     - Rsync
     - AWS CLI
