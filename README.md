@@ -46,3 +46,12 @@
     - AWS CLI
     - Curl
     - Git
+
+- [8.1-ubuntu](./php/8.1/ubuntu/Dockerfile)
+    - PHP 8.1
+    - Composer 2
+    - Node.JS 16.x and NPM
+    - Rsync
+    - AWS CLI
+    - Curl
+    - Git

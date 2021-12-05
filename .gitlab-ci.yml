@@ -127,3 +127,26 @@ Ubuntu 8.0 - Scheduled:
     - docker push $NAMESPACE:$IMAGE_VERSION
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
+
+Ubuntu 8.1:
+  stage: build
+  variables:
+    IMAGE_VERSION: "8.1-ubuntu"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/8.1/ubuntu/Dockerfile .
+    - docker push $NAMESPACE:$IMAGE_VERSION
+  when: manual
+
+Ubuntu 8.1 - Scheduled:
+  stage: build
+  variables:
+    IMAGE_VERSION: "8.1-ubuntu"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/8.1/ubuntu/Dockerfile .
+    - docker push $NAMESPACE:$IMAGE_VERSION
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
