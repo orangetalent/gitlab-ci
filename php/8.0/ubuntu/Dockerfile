@@ -24,8 +24,7 @@ RUN apt-get update \
         apt-transport-https \
         curl \
         unzip \
-        php-apcu \
-        php-apcu-bc \
+        php8.0-apcu \
         php8.0-cli \
         php8.0-curl \
         php8.0-bcmath \
