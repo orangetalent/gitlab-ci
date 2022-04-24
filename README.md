@@ -55,3 +55,14 @@
     - AWS CLI
     - Curl
     - Git
+
+- [cypress-node-16-php-8.1-chrome-firefox-edge](./cypress/node-16-php-8.1-chrome-firefox-edge/Dockerfile)
+    - PHP 8.1
+    - Composer 2
+    - Node.JS 16.x and NPM
+    - Curl
+    - Git
+    - Chrome (100)
+    - Firefox (99)
+    - Edge (100)
+    - Dependencies for Cypress

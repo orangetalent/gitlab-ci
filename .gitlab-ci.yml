@@ -150,3 +150,14 @@ Ubuntu 8.1 - Scheduled:
     - docker push $NAMESPACE:$IMAGE_VERSION
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
+
+Ubuntu Cypress 8.1:
+  stage: build
+  variables:
+    IMAGE_VERSION: "cypress-node-16-php-8.1-chrome-firefox-edge"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f cypress/node-16-php-8.1-chrome-firefox-edge/Dockerfile .
+    - docker push $NAMESPACE:$IMAGE_VERSION
+  when: manual
