@@ -56,6 +56,15 @@
     - Curl
     - Git
 
+- [8.2-ubuntu](./php/8.2/ubuntu/Dockerfile)
+    - PHP 8.2
+    - Composer 2
+    - Node.JS 16.x and NPM
+    - Rsync
+    - AWS CLI
+    - Curl
+    - Git
+
 - [cypress-node-16-php-8.1-chrome-firefox-edge](./cypress/node-16-php-8.1-chrome-firefox-edge/Dockerfile)
     - PHP 8.1
     - Composer 2
