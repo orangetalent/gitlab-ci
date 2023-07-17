@@ -1,4 +1,4 @@
-FROM ubuntu:bionic
+FROM ubuntu:jammy
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -7,12 +7,11 @@ ENV COMPOSER_BIN_DIR=/usr/local/bin
 ENV COMPOSER_HOME=/root/.composer
 ENV PATH="$COMPOSER_BIN_DIR:$PATH"
 
-# Install Ondrej repos for Ubuntu Bionic, PHP, composer and selected extensions - better selection than
-# the distro's packages
+# Install Ondrej repos for Ubuntu Jammy Jellyfish, PHP, composer and selected extensions
 RUN apt-get update \
     && mkdir -p $COMPOSER_HOME \
     && apt-get install -y --no-install-recommends gnupg locales locales-all \
-    && echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu bionic main" > /etc/apt/sources.list.d/ondrej-php.list \
+    && echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu jammy main" > /etc/apt/sources.list.d/ondrej-php.list \
     && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C \
     && apt-get update \
     && apt-get -y --no-install-recommends install \
