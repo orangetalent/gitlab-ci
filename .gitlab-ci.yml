@@ -13,52 +13,6 @@ services:
 before_script:
   - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
 
-Ubuntu 7.4 Node 14:
-  stage: build
-  variables:
-    IMAGE_VERSION: "7.4-ubuntu-node-14"
-  script:
-    - docker pull php:$IMAGE_VERSION || true
-    - docker pull $NAMESPACE:$IMAGE_VERSION || true
-    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/7.4/ubuntu-node-14/Dockerfile .
-    - docker push $NAMESPACE:$IMAGE_VERSION
-  when: manual
-
-Ubuntu 7.4 Node 14 - Scheduled:
-  stage: build
-  variables:
-    IMAGE_VERSION: "7.4-ubuntu-node-14"
-  script:
-    - docker pull php:$IMAGE_VERSION || true
-    - docker pull $NAMESPACE:$IMAGE_VERSION || true
-    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/7.4/ubuntu-node-14/Dockerfile .
-    - docker push $NAMESPACE:$IMAGE_VERSION
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule"
-
-Ubuntu 7.4 Node 14 Composer 2:
-  stage: build
-  variables:
-    IMAGE_VERSION: "7.4-ubuntu-node-14-composer-2"
-  script:
-    - docker pull php:$IMAGE_VERSION || true
-    - docker pull $NAMESPACE:$IMAGE_VERSION || true
-    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/7.4/ubuntu-node-14-composer-2/Dockerfile .
-    - docker push $NAMESPACE:$IMAGE_VERSION
-  when: manual
-
-Ubuntu 7.4 Node 14 Composer 2 - Scheduled:
-  stage: build
-  variables:
-    IMAGE_VERSION: "7.4-ubuntu-node-14-composer-2"
-  script:
-    - docker pull php:$IMAGE_VERSION || true
-    - docker pull $NAMESPACE:$IMAGE_VERSION || true
-    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/7.4/ubuntu-node-14-composer-2/Dockerfile .
-    - docker push $NAMESPACE:$IMAGE_VERSION
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule"
-
 Ubuntu 8.1:
   stage: build
   variables:
@@ -66,23 +20,16 @@ Ubuntu 8.1:
   script:
     - docker pull php:$IMAGE_VERSION || true
     - docker pull $NAMESPACE:$IMAGE_VERSION || true
-    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/8.1/ubuntu/Dockerfile .
-    - docker push $NAMESPACE:$IMAGE_VERSION
-  when: manual
-
-Ubuntu 8.1 - Scheduled:
-  stage: build
-  variables:
-    IMAGE_VERSION: "8.1-ubuntu"
-  script:
-    - docker pull php:$IMAGE_VERSION || true
-    - docker pull $NAMESPACE:$IMAGE_VERSION || true
-    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/8.1/ubuntu/Dockerfile .
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/8.1/ubuntu-node-16/Dockerfile .
     - docker push $NAMESPACE:$IMAGE_VERSION
   rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: manual
+    - if: $CI_PIPELINE_SOURCE == "push"
+      when: manual
     - if: $CI_PIPELINE_SOURCE == "schedule"
 
-Ubuntu 8.2:
+Ubuntu 8.2-node-16:
   stage: build
   variables:
     IMAGE_VERSION: "8.2-ubuntu"
@@ -122,6 +69,22 @@ Ubuntu 8.3-node-18:
     - docker pull php:$IMAGE_VERSION || true
     - docker pull $NAMESPACE:$IMAGE_VERSION || true
     - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/8.3/ubuntu-node-18/Dockerfile .
+    - docker push $NAMESPACE:$IMAGE_VERSION
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: manual
+    - if: $CI_PIPELINE_SOURCE == "push"
+      when: manual
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+
+Ubuntu 8.3-node-20:
+  stage: build
+  variables:
+    IMAGE_VERSION: "8.3-ubuntu-node-20"
+  script:
+    - docker pull php:$IMAGE_VERSION || true
+    - docker pull $NAMESPACE:$IMAGE_VERSION || true
+    - docker build --compress --cache-from $NAMESPACE:$IMAGE_VERSION --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t $NAMESPACE:$IMAGE_VERSION -f php/8.3/ubuntu-node-20/Dockerfile .
     - docker push $NAMESPACE:$IMAGE_VERSION
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"

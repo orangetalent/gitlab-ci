@@ -6,6 +6,7 @@ ENV COMPOSER_NO_INTERACTION=1
 ENV COMPOSER_BIN_DIR=/usr/local/bin
 ENV COMPOSER_HOME=/root/.composer
 ENV PATH="$COMPOSER_BIN_DIR:$PATH"
+ENV NODE_MAJOR=16
 
 # Install Ondrej repos for Ubuntu Jammy Jellyfish, PHP, composer and selected extensions
 RUN apt-get update \
@@ -23,37 +24,34 @@ RUN apt-get update \
         apt-transport-https \
         curl \
         unzip \
-        php7.4-apcu \
-        php7.4-apcu-bc \
-        php7.4-cli \
-        php7.4-curl \
-        php7.4-bcmath \
-        php7.4-json \
-        php7.4-gd \
-        php7.4-mbstring \
-        php7.4-opcache \
-        php7.4-intl \
-        php7.4-pdo \
-        php7.4-pgsql \
-        php7.4-mysql \
-        php7.4-sqlite3 \
-        php7.4-readline \
-        php7.4-redis \
-        php7.4-xml \
-        php7.4-soap \
-        php7.4-xmlrpc \
-        php7.4-zip \
+        php8.1-apcu \
+        php8.1-cli \
+        php8.1-curl \
+        php8.1-bcmath \
+        php8.1-gd \
+        php8.1-mbstring \
+        php8.1-opcache \
+        php8.1-intl \
+        php8.1-pdo \
+        php8.1-pgsql \
+        php8.1-mysql \
+        php8.1-sqlite3 \
+        php8.1-readline \
+        php8.1-redis \
+        php8.1-xml \
+        php8.1-soap \
+        php8.1-xmlrpc \
+        php8.1-zip \
         rsync \
         libpng-dev \
         libjpeg-dev \
         libtiff-dev \
         libgif-dev \
         awscli \
-    && curl -sL https://deb.nodesource.com/setup_14.x | bash \
+    && curl -sL https://deb.nodesource.com/setup_16.x | bash \
     && apt-get -y --no-install-recommends install nodejs \
     && apt-get clean \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=$COMPOSER_BIN_DIR --filename=composer --version=1.10.19 \
-    && $COMPOSER_BIN_DIR/composer global require "hirak/prestissimo:^0.3" \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=$COMPOSER_BIN_DIR --filename=composer \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* $COMPOSER_HOME/cache/* \
     && php -v \
     && composer --version \
