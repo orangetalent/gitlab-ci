@@ -50,6 +50,14 @@
   - Curl
   - Git
 
+- [shopify-ruby-3-node-20](./shopify/Dockerfile)
+  - Debian Bookworm
+  - Ruby 3.3
+  - Node.JS 20.x and NPM
+  - Shopify CLI (`@shopify/cli`) and Shopify Theme (`@shopify/theme`)
+  - Curl
+  - Git
+
 ## Deprecated
 
 - 7.3-ubuntu
